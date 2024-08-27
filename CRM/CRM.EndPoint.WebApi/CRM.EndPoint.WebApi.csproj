@@ -15,8 +15,6 @@
     <Folder Include="Business\UserLogins\Services\" />
     <Folder Include="Business\UserClaims\Repositories\" />
     <Folder Include="Business\UserClaims\Services\" />
-    <Folder Include="Business\RoleClaims\Repositories\" />
-    <Folder Include="Business\RoleClaims\Services\" />
     <Folder Include="Business\Roles\Repositories\" />
     <Folder Include="Business\Roles\Services\" />
     <Folder Include="Business\Users\Repositories\" />

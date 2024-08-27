@@ -15,7 +15,7 @@ public abstract class BaseDatabaseContext : IdentityDbContext<UserEntity, RoleEn
 {
     protected IDbContextTransaction _transaction;
     protected BaseDatabaseContext(){}
-    protected BaseDatabaseContext(DbContextOptions options):base(options){}
+    public BaseDatabaseContext(DbContextOptions options):base(options){}
 
 
 }

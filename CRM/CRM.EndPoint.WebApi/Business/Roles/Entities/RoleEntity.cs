@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace CRM.EndPoint.WebApi.Business.Roles.Entities;
 
-public class RoleEntity : IdentityRole<long> ,IEntity
+public class RoleEntity : IdentityRole<long>, IEntity<long>
 {
     public bool IsDeleted { get; set; }
     public bool IsActive { get; set; }
+    public Guid Key { get; set; }
 }
