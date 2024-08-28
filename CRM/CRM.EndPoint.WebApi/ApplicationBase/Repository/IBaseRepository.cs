@@ -1,7 +1,6 @@
 ﻿using CRM.EndPoint.WebApi.ApplicationBase.Database;
 using CRM.EndPoint.WebApi.ApplicationBase.Entity;
 using CRM.EndPoint.WebApi.ApplicationBase.Pattern;
-using System;
 
 namespace CRM.EndPoint.WebApi.ApplicationBase.Repository;
 
