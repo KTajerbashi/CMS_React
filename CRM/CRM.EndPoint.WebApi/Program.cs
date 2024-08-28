@@ -6,7 +6,8 @@ StartApplication.RunApplication(() =>
     var builder = WebApplication.CreateBuilder(args);
     builder
     .ServiceConfiguration()
-    .ConfigurePipeline();
+    .ConfigurePipeline()
+    .Run();
 });
 
 

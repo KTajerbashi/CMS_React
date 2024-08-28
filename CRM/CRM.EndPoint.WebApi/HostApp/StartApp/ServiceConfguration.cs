@@ -1,5 +1,7 @@
 ﻿using CRM.EndPoint.WebApi.ApplicationBase.Extensions;
 using CRM.EndPoint.WebApi.Databases.SQL.Data.Extensions;
+using CRM.EndPoint.WebApi.Providers.BackgroundTask.Hangfire.Extension;
+using CRM.EndPoint.WebApi.Providers.LoggerProvider.Configuration;
 using CRM.EndPoint.WebApi.Providers.MapperProvider.Extension;
 
 namespace CRM.EndPoint.WebApi.HostApp.StartApp;
@@ -9,14 +11,18 @@ public static class ServiceConfguration
     public static WebApplication ServiceConfiguration(this WebApplicationBuilder builder)
     {
         IConfiguration configuration = builder.Configuration;
-        // Add services to the container.
+        
+        builder.AddConsoleLogConfiguration();
+        
         builder.Services.AddControllersWithViews();
 
         builder.Services.AddDatabaseContext(configuration);
-        
+
         builder.Services.AddApplicationServices();
 
         builder.Services.AddMapper();
+
+        builder.Services.AddHangfireService(configuration);
 
         return builder.Build();
     }
@@ -41,7 +47,8 @@ public static class ServiceConfguration
             name: "default",
             pattern: "api/{controller=Home}/{action=Index}/{id?}");
 
-        app.Run();
+        app.UseHangfire();
+
         return app;
     }
 }
