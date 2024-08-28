@@ -7,21 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Business\UserRoles\Repositories\" />
-    <Folder Include="Business\UserRoles\Services\" />
-    <Folder Include="Business\UserTokens\Repositories\" />
-    <Folder Include="Business\UserTokens\Services\" />
-    <Folder Include="Business\UserLogins\Repositories\" />
-    <Folder Include="Business\UserLogins\Services\" />
-    <Folder Include="Business\UserClaims\Repositories\" />
-    <Folder Include="Business\UserClaims\Services\" />
-    <Folder Include="Business\Roles\Repositories\" />
-    <Folder Include="Business\Roles\Services\" />
-    <Folder Include="Business\Users\Repositories\" />
-    <Folder Include="Business\Users\Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
@@ -33,6 +19,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="8.0.1" />
+    <PackageReference Include="Scrutor" Version="4.2.2" />
   </ItemGroup>
 
 </Project>
