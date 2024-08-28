@@ -3,6 +3,7 @@ using CRM.EndPoint.WebApi.Databases.SQL.Data.Extensions;
 using CRM.EndPoint.WebApi.Providers.BackgroundTask.Hangfire.Extension;
 using CRM.EndPoint.WebApi.Providers.LoggerProvider.Configuration;
 using CRM.EndPoint.WebApi.Providers.MapperProvider.Extension;
+using CRM.EndPoint.WebApi.Providers.SwaggerProvider.Extension;
 
 namespace CRM.EndPoint.WebApi.HostApp.StartApp;
 
@@ -23,6 +24,8 @@ public static class ServiceConfguration
         builder.Services.AddMapper();
 
         builder.Services.AddHangfireService(configuration);
+
+        builder.Services.AddSwaggerService(configuration);
 
         return builder.Build();
     }
@@ -48,6 +51,8 @@ public static class ServiceConfguration
             pattern: "api/{controller=Home}/{action=Index}/{id?}");
 
         app.UseHangfire();
+
+        app.UseSwaggerConfig();
 
         return app;
     }

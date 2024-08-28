@@ -2,8 +2,8 @@
 
 namespace CRM.EndPoint.WebApi.ApplicationBase.BaseControllers;
 
-[ApiController]
 [Route("api/[controller]")]
+[ApiController]
 public abstract class BaseController : Controller
 {
 
