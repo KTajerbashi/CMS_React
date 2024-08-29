@@ -1,29 +1,27 @@
 ﻿using CRM.EndPoint.WebApi.ApplicationBase.Database;
 using CRM.EndPoint.WebApi.ApplicationBase.Entity;
+using CRM.EndPoint.WebApi.ApplicationBase.Models;
 using CRM.EndPoint.WebApi.ApplicationBase.Pattern;
 
 namespace CRM.EndPoint.WebApi.ApplicationBase.Repository;
 
-public interface IBaseRepository<TEntity, TContext, TId> : IUnitOfWork
+public interface IBaseRepository<TEntity, TContext, TId, TDTO> : IUnitOfWork
     where TEntity : IEntity<TId>
     where TContext : BaseDatabaseContext
-    where TId : struct,
-          IComparable,
-          IComparable<TId>,
-          IConvertible,
-          IEquatable<TId>,
-          IFormattable
+    where TId : struct, IComparable, IComparable<TId>, IConvertible, IEquatable<TId>, IFormattable
+    where TDTO : BaseDTO<TId>
 {
 
-    Task<TId> Insert(TEntity entity);
+    Task<TId> InsertAsync(TDTO entity);
 
 
-    Task Delete(TEntity entity);
-    Task Delete(TId id);
-    Task Delete(Guid key);
+    Task DeleteAsync(TDTO entity);
+    Task DeleteAsync(TId id);
+    Task DeleteAsync(Guid key);
 
 
-    Task<TEntity> GetAsync(TId id);
-    Task<TEntity> GetAsync(Guid key);
-    Task<IEnumerable<TEntity>> GetAsync();
+    Task<TDTO> GetAsync(TId id);
+    Task<TDTO> GetAsync(Guid key);
+    Task<IEnumerable<TDTO>> GetAsync();
+    IQueryable<TEntity> GetQueryable();
 }

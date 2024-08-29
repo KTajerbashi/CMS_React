@@ -34,7 +34,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Business\Users\Models\" />
     <Folder Include="Middlewares\ErrorHandling\" />
     <Folder Include="Middlewares\ExceptionHandling\" />
     <Folder Include="Providers\LoggerProvider\NLog\" />

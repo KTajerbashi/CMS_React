@@ -1,51 +1,73 @@
 ﻿using CRM.EndPoint.WebApi.ApplicationBase.Database;
 using CRM.EndPoint.WebApi.ApplicationBase.Entity;
+using CRM.EndPoint.WebApi.ApplicationBase.Models;
 using CRM.EndPoint.WebApi.ApplicationBase.Pattern;
 using CRM.EndPoint.WebApi.ApplicationBase.Repository;
+using CRM.EndPoint.WebApi.Providers.MapperProvider.Abstraction;
 using Microsoft.EntityFrameworkCore;
 
 namespace CRM.EndPoint.WebApi.ApplicationBase.Service;
 
-public abstract class BaseRepository<TEntity, TContext, TId>
-    : UnitOfWork<TContext>, IBaseRepository<TEntity, TContext, TId>
+public abstract class BaseRepository<TEntity, TContext, TId, TDTO>
+    : UnitOfWork<TContext>, IBaseRepository<TEntity, TContext, TId, TDTO>
     where TEntity : class, IEntity<TId>
     where TContext : BaseDatabaseContext
     where TId : struct, IComparable, IComparable<TId>, IConvertible, IEquatable<TId>, IFormattable
+    where TDTO : BaseDTO<TId>
 {
-    protected BaseRepository(TContext context) : base(context)
+    protected IMapperAdapter MapperAdapter;
+    protected BaseRepository(TContext context, IMapperAdapter mapperAdapter) : base(context)
     {
+        MapperAdapter = mapperAdapter;
     }
+    private TEntity GetEntity(TDTO model)
+        => MapperAdapter.Map<TDTO, TEntity>(model);
+    private TDTO GetDTO(TEntity entity)
+        => MapperAdapter.Map<TEntity, TDTO>(entity);
 
-    public Task Delete(TEntity entity)
-        => Task.FromResult(Context.Set<TEntity>().Remove(entity));
+    public Task DeleteAsync(TDTO model)
+        => Task.FromResult(Context.Set<TEntity>().Remove(GetEntity(model)));
 
-    public async Task Delete(TId id)
-        => await Delete(await Context.Set<TEntity>().FindAsync(id));
+    public async Task DeleteAsync(TId id)
+        => await DeleteAsync(GetDTO(await Context.Set<TEntity>().FindAsync(id)));
 
-    public async Task Delete(Guid key)
+    public async Task DeleteAsync(Guid key)
     {
         var entity = await Context.Set<TEntity>().Where(item => item.Key.Equals(key)).FirstOrDefaultAsync();
         if (entity is null)
             throw new InvalidOperationException();//TODO Exception
-        await Delete(entity);
+        await DeleteAsync(GetDTO(entity));
     }
 
-    public async Task<TEntity> GetAsync(TId id)
-        => await GetQueryable().Where(item => item.Id.Equals(id)).FirstOrDefaultAsync();
-
-    public async Task<TEntity> GetAsync(Guid key)
-        => await GetQueryable().Where(item => item.Key.Equals(key)).FirstOrDefaultAsync();
-
-    public async Task<IEnumerable<TEntity>> GetAsync() 
-        => await GetQueryable().ToListAsync();
-
-    public async Task<TId> Insert(TEntity entity)
+    public async Task<TDTO> GetAsync(TId id)
     {
+        var entity = await GetQueryable().Where(item => item.Id.Equals(id)).FirstOrDefaultAsync();
+        return GetDTO(entity);
+    }
+
+    public async Task<TDTO> GetAsync(Guid key)
+    {
+        var entity = await GetQueryable().Where(item => item.Key.Equals(key)).FirstOrDefaultAsync();
+        return GetDTO(entity);
+    }
+
+    public async Task<IEnumerable<TDTO>> GetAsync()
+    {
+        var dataList = await GetQueryable().ToListAsync();
+        var result = MapperAdapter.Map<List<TEntity>,List<TDTO>>(dataList);
+        return result.ToList();
+    }
+
+    public async Task<TId> InsertAsync(TDTO model)
+    {
+        var entity = GetEntity(model);
         await Context.Set<TEntity>().AddAsync(entity);
         return entity.Id;
     }
     public IQueryable<TEntity> GetQueryable()
-    {
-        return Context.Set<TEntity>().Where(item => item.IsActive && !item.IsDeleted).AsNoTracking().AsQueryable();
-    }
+        => Context
+            .Set<TEntity>()
+            .Where(item => item.IsActive && !item.IsDeleted)
+            .AsNoTracking()
+            .AsQueryable();
 }

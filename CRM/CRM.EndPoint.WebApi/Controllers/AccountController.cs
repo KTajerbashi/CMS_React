@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 
 namespace CRM.EndPoint.WebApi.Controllers;
-
 public class AccountController : AuthorizationController
 {
     // GET: api/Account

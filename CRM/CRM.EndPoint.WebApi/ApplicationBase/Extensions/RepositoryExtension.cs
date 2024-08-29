@@ -14,7 +14,7 @@ public static class RepositoryExtension
         var assembly = Assembly.GetExecutingAssembly();
         var repositoryTypes = assembly.GetTypes()
         .Where(type => type.IsClass && !type.IsAbstract &&
-                       type.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IBaseRepository<,,>)))
+                       type.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IBaseRepository<,,,>)))
         .ToList();
         services
             .Scan(s => s.FromAssemblies(assembly)

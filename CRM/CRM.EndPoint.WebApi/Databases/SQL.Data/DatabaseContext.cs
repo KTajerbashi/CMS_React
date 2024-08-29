@@ -1,4 +1,5 @@
 ﻿using CRM.EndPoint.WebApi.ApplicationBase.Database;
+using CRM.EndPoint.WebApi.Databases.SQL.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace CRM.EndPoint.WebApi.Databases.SQL.Data;
@@ -18,5 +19,6 @@ public class DatabaseContext : BaseDatabaseContext
     {
         base.OnModelCreating(builder);
         builder.AddBuilderConfiguration();
+        builder.InitialSeedData();
     }
 }
