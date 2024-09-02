@@ -1,24 +1,38 @@
-import React from "react"; // { useState }
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomeComponent from "./Pages/Layout/Home/HomeComponent";
-import AboutComponent from "./Pages/Layout/About/AboutComponent";
-import NotFoundComponent from "./Pages/Layout/NotFound/NotFoundComponent";
-// import reactLogo from "./assets/react.svg";
-// import viteLogo from "/vite.svg";
-import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import { Container } from "react-bootstrap";
+import ReactContent from "./components/hoc/ReactContent";
+import HomeComponent from "./pages/layout/home/HomeComponent";
+import AboutComponent from "./pages/layout/about/AboutComponent";
+import NotFoundComponent from "./pages/layout/responsePage/404";
+import UnauthorizePage from "./pages/layout/responsePage/401";
+import ForbiddenPage from "./pages/layout/responsePage/403";
+import InternalServerErrorPage from "./pages/layout/responsePage/500";
+import NavbarComponent from "./components/navbar/navbarComponent";
 
 function App() {
   // const [count,setCount] = useState(0);
   return (
-    <React.Fragment>
-      <Router>
+    <ReactContent>
+      <NavbarComponent />
+      <Container
+        fluid
+        style={{
+          marginTop: "100px",
+        }}
+      >
         <Routes>
           <Route path="/" element={<HomeComponent />} />
           <Route path="/about" element={<AboutComponent />} />
+          <Route path="/Unauthorize" element={<UnauthorizePage />} />
+          <Route path="/Forbidden" element={<ForbiddenPage />} />
+          <Route
+            path="/InternalServerError"
+            element={<InternalServerErrorPage />}
+          />
           <Route path="*" element={<NotFoundComponent />} />
         </Routes>
-      </Router>
-    </React.Fragment>
+      </Container>
+    </ReactContent>
   );
 }
 
