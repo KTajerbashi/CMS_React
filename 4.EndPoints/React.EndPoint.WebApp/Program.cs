@@ -32,7 +32,7 @@ using React.EndPoint.WebApi;
 StartApp.Run(() =>
 {
     Console.ForegroundColor = ConsoleColor.Blue;
-    Console.WriteLine($"Start: Angular.EndPoint.WebApp Run ...\nTime: {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
+    Console.WriteLine($"Start: React.EndPoint.WebApp Run ...\nTime: {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
     var builder = WebApplication
         .CreateBuilder(args)
         .AddWebAppService()

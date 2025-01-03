@@ -4,9 +4,9 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <!--<SpaRoot>.\ClientApp</SpaRoot>-->
-    <!--<SpaProxyLaunchCommand>npm start</SpaProxyLaunchCommand>-->
-    <!--<SpaProxyServerUrl>https://localhost:44103</SpaProxyServerUrl>-->
+    <SpaRoot>.\ClientApp</SpaRoot>
+    <SpaProxyLaunchCommand>npm run dev</SpaProxyLaunchCommand>
+    <SpaProxyServerUrl>https://localhost:4030</SpaProxyServerUrl>
   </PropertyGroup>
 
   <ItemGroup>
